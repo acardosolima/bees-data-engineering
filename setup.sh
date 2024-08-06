@@ -16,7 +16,7 @@ prod_statements(){
 
     terraform -chdir=$TERRAFORM_DIR init 
     terraform -chdir=$TERRAFORM_DIR validate 
-    terraform -chdir=$TERRAFORM_DIR fmt .
+    terraform -chdir=$TERRAFORM_DIR fmt -recursive ./modules
     terraform -chdir=$TERRAFORM_DIR plan
     terraform -chdir=$TERRAFORM_DIR apply
 }

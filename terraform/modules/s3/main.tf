@@ -1,21 +1,33 @@
 provider "aws" {
-  region = "us-east-1"  # Ajuste para sua região desejada
+  region = "us-east-1"
 }
 
 # Bucket Bronze
 resource "aws_s3_bucket" "bronze_bucket" {
-  bucket = "my-project-bronze-bucket"
-  acl    = "private"
+  bucket = "bees-breweries-tf-bronze-bucket"
+
+  tags = {
+    Name  = "Bees Breweries"
+    Layer = "Bronze"
+  }
 }
 
 # Bucket Silver
 resource "aws_s3_bucket" "silver_bucket" {
-  bucket = "my-project-silver-bucket"
-  acl    = "private"
+  bucket = "bees-breweries-tf-silver-bucket"
+
+  tags = {
+    Name  = "Bees Breweries"
+    Layer = "Bronze"
+  }
 }
 
 # Bucket Gold
 resource "aws_s3_bucket" "gold_bucket" {
-  bucket = "my-project-gold-bucket"
-  acl    = "private"
+  bucket = "bees-breweries-tf-gold-bucket"
+
+  tags = {
+    Name  = "Bees Breweries"
+    Layer = "Bronze"
+  }
 }
