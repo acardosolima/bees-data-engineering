@@ -21,6 +21,9 @@ ENV PATH=$SPARK_HOME/bin:$PATH
 # Copy project requirements file into Docker image
 COPY requirements.txt /app/requirements.txt
 
+# Copy logging conf file into Docker image
+COPY logging.conf /app/logging.conf
+
 # Install required Python packages
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install -r /app/requirements.txt

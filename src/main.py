@@ -1,7 +1,7 @@
 import logging.config
 
 # Setup logging configuration
-logging.config.fileConfig("logging.conf")
+logging.config.fileConfig("./logging.conf")
 logger = logging.getLogger(__name__)
 
 def main():
