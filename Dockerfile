@@ -3,8 +3,13 @@ FROM python:3.12-slim
 
 # Install Java 13
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk tar curl gzip && \
-    apt-get clean
+    apt-get install --no-install-recommends -y \
+    openjdk-17-jdk=17.0.12+7-2~deb12u1 \
+    tar=1.34+dfsg-1.2+deb12u1 \
+    curl=7.88.1-10+deb12u6 \
+    gzip=1.12-1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Download and install Apache Spark
 ENV SPARK_VERSION=3.5.1
@@ -25,8 +30,7 @@ COPY requirements.txt /app/requirements.txt
 COPY logging.conf /app/logging.conf
 
 # Install required Python packages
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install -r /app/requirements.txt
+RUN python3 -m pip install --no-cache-dir -r /app/requirements.txt
 
 # Set the working directory
 WORKDIR /app

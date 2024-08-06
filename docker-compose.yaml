@@ -2,7 +2,7 @@ services:
   pyspark:
     build:
       context: .
-      dockerfile: spark.dockerfile
+      dockerfile: Dockerfile
     volumes:
       - ./src:/app/src
     command: python /app/src/pyspark.py

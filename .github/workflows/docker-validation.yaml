@@ -15,7 +15,7 @@ jobs:
       
     - name: Lint Dockerfile with Hadolint (https://hadolint.github.io/hadolint/)
       run: |
-        docker run --rm -i hadolint/hadolint < ./Dockerfile  # Replace with your Dockerfile name
+        docker run --rm -i hadolint/hadolint < ./Dockerfile
 
     - name: Lint Docker Compose
       run: docker compose -f docker-compose.yaml config -q
