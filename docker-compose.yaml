@@ -1,0 +1,9 @@
+services:
+  pyspark:
+    build:
+      context: .
+      dockerfile: spark.dockerfile
+    volumes:
+      - ./src:/app
+    command: python /app/main.py
+
