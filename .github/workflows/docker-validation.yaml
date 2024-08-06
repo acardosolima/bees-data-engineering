@@ -1,0 +1,21 @@
+name: Docker configuration validations
+
+on:
+  push:
+    branches-ignore: [master, develop]
+
+jobs:
+  run-linters:
+   name: Run lint on docker files
+   runs-on: ubuntu-latest
+
+   steps:
+    - name: Checkout git repository
+      uses: actions/checkout@v4
+      
+    - name: Lint Dockerfile with Hadolint (https://hadolint.github.io/hadolint/)
+      run: |
+        docker run --rm -i hadolint/hadolint < ./Dockerfile
+
+    - name: Lint Docker Compose
+      run: docker compose -f docker-compose.yaml config -q
