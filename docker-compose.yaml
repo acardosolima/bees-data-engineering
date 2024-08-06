@@ -5,5 +5,5 @@ services:
       dockerfile: spark.dockerfile
     volumes:
       - ./src:/app/src
-    command: python /app/src/main.py
+    command: python /app/src/pyspark.py
 

@@ -1,10 +1,10 @@
 # Use the official Python image from the Docker Hub
-FROM amazoncorretto:8
+FROM python:3.12-slim
 
-# Install Python 3
-RUN yum update && \
-    yum install -y python3 python-pip tar gzip && \
-    yum clean all
+# Install Java 13
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk tar curl gzip && \
+    apt-get clean
 
 # Download and install Apache Spark
 ENV SPARK_VERSION=3.5.1
