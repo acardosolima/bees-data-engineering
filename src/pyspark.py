@@ -2,18 +2,18 @@
 import findspark
 findspark.init()
 
-import requests
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType
+from modules.sources import bees_brewery_api
+from pyspark.sql.types import StructType, StructField, StringType
 
 spark = SparkSession.builder.appName("BreweryData").getOrCreate()
 
-def fetch_data_from_api(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        response.raise_for_status()
+def fetch_data_from_api(func):
+    res = func()
+
+    if res.status_code== 200:
+        return res.json()
+    
 
 schema = StructType([
     StructField("id", StringType(), False),
@@ -34,8 +34,7 @@ schema = StructType([
     StructField("street", StringType(), True)
 ])
 
-url = 'https://api.openbrewerydb.org/breweries'
-data = fetch_data_from_api(url)
+data = fetch_data_from_api(bees_brewery_api.get)
 
 df = spark.createDataFrame(data, schema=schema)
 
