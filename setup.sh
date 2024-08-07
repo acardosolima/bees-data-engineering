@@ -3,7 +3,7 @@
 # Show error message regard environment parameter
 usage_error_message() {
     echo "Correct script call: $0 -e {dev|prod}"
-    return 1
+    exit 1
 }
 
 dev_statements(){
