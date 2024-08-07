@@ -1,33 +1,23 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
-# Bucket Bronze
 resource "aws_s3_bucket" "bronze_bucket" {
-  bucket = "bees-breweries-tf-bronze-bucket"
+  bucket = "${var.bucket_prefix}bronze-bucket"
 
   tags = {
-    Name  = "Bees Breweries"
     Layer = "Bronze"
   }
 }
 
-# Bucket Silver
 resource "aws_s3_bucket" "silver_bucket" {
-  bucket = "bees-breweries-tf-silver-bucket"
+  bucket = "${var.bucket_prefix}silver-bucket"
 
   tags = {
-    Name  = "Bees Breweries"
-    Layer = "Bronze"
+    Layer = "Silver"
   }
 }
 
-# Bucket Gold
 resource "aws_s3_bucket" "gold_bucket" {
-  bucket = "bees-breweries-tf-gold-bucket"
+  bucket = "${var.bucket_prefix}gold-bucket"
 
   tags = {
-    Name  = "Bees Breweries"
-    Layer = "Bronze"
+    Layer = "Gold"
   }
 }
