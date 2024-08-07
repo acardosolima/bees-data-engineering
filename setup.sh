@@ -2,8 +2,8 @@
 
 # Show error message regard environment parameter
 usage_error_message() {
-    echo "Correct script call: $0 -e {dev|prod}"
-    exit 1
+    echo "Invalid argument $1. Correct script call: $0 {dev|prod}"
+    return 1
 }
 
 dev_statements(){
@@ -26,16 +26,7 @@ if [ $# -eq 0 ]; then
     usage_error_message
 fi
 
-while getopts "e:" opt; do
-    case $opt in
-        e)
-            environment=$OPTARG
-            ;;
-        *)
-            usage
-            ;;
-    esac
-done
+environment=$1
 
 case $environment in
     dev)
@@ -47,7 +38,6 @@ case $environment in
         prod_statements
         ;;
     *)
-        echo "Invalid argument. Use -e {dev/prod}."
         usage_error_message
         ;;
 esac
