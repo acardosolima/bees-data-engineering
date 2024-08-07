@@ -1,6 +1,11 @@
 import requests
 import logging.config
 
+"""
+This module provides methods to gather data from Open Brewery DB API.
+
+"""
+
 # Setup logging configuration
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
@@ -29,9 +34,3 @@ def get(url: str = URL, headers: dict = HEADERS) -> requests.Response:
                       f" status {res.status_code}")
 
         return res
-
-def main():
-        print(get(URL).json())
-
-if __name__ == "__main__":
-        main()
