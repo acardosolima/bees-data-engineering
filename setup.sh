@@ -3,7 +3,7 @@
 # Show error message regard environment parameter
 usage_error_message() {
     echo "Correct script call: $0 -e {dev|prod}"
-    exit 1
+    return 1
 }
 
 dev_statements(){
@@ -16,7 +16,7 @@ prod_statements(){
 
     terraform -chdir=$TERRAFORM_DIR init 
     terraform -chdir=$TERRAFORM_DIR validate 
-    terraform -chdir=$TERRAFORM_DIR fmt -recursive ./modules
+    terraform -chdir=$TERRAFORM_DIR fmt -recursive
     terraform -chdir=$TERRAFORM_DIR plan
     terraform -chdir=$TERRAFORM_DIR apply
 }
