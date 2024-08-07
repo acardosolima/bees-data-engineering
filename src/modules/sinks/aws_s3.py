@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 S3_PATH = str(datetime.now().strftime("%Y%m%d%H%m%S"))
 BUCKET_NAME = "bees-breweries-tf-bronze-bucket"
-FILENAME = "data.json"
+FILENAME = "brewery.json"
 
 
 def sink_to_s3_bucket(bucket_name: str = BUCKET_NAME, filename: str = FILENAME,
