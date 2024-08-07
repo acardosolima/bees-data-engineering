@@ -3,7 +3,7 @@ name: Restrict PRs to Master
 on:
   pull_request:
     branches:
-      - master
+      - [develop, master]
 
 jobs:
   restrict-pr:
@@ -12,7 +12,10 @@ jobs:
       - name: Check PR target branch
         run: |
           echo "Checking the target branch of the PR..."
-          if [[ "${{ github.event.pull_request.head.ref }}" != "develop" ]]; then
+          BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+          HEAD_BRANCH=${{ github.event.pull_request.head.ref }}
+
+          if [ "$BASE_BRANCH" == "master" ] && [ "$HEAD_BRANCH" != "develop" ]; then
             echo "PRs to the 'master' branch are restricted. Please make PRs to the 'develop' branch."
             exit 1
           fi
