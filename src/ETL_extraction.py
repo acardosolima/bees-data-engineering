@@ -36,6 +36,12 @@ def save_json_file(func, data: object = None):
         
         return res
 
-data = fetch_data_from_api(bees_brewery_api.get)
 
-saving_resp = save_json_file(aws_s3.sink_to_s3_bucket, data=data)
+
+def main(func_fetch, func_save):
+
+    raw_data = fetch_data_from_api(func_fetch)
+
+    saving_resp = save_json_file(func_save, raw_data)
+
+    return saving_resp
