@@ -3,7 +3,8 @@ name: Restrict PRs to Master
 on:
   pull_request:
     branches:
-      - [develop, master]
+      - develop
+      - master
 
 jobs:
   restrict-pr:
