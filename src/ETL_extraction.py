@@ -2,7 +2,7 @@
 import logging.config
 from utils import get_full_function_name
 from modules.sources import bees_brewery_api
-from modules.sinks import local_folder
+from modules.sinks import local_folder, aws_s3
 
 """
 This module provides methods to do Extraction steps.
@@ -38,4 +38,4 @@ def save_json_file(func, data: object = None):
 
 data = fetch_data_from_api(bees_brewery_api.get)
 
-saving_resp = save_json_file(local_folder.sink_to_local_folder, data=data)
+saving_resp = save_json_file(aws_s3.sink_to_s3_bucket, data=data)
