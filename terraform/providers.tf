@@ -13,7 +13,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "Bees Breweries"
+      Project = "Bees_Breweries"
       profile = var.aws_profile
     }
   }
