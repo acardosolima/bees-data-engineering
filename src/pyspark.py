@@ -1,43 +1,34 @@
-# Use findspark library to setup pyspark 
-import findspark
-findspark.init()
 
-from pyspark.sql import SparkSession
+import logging.config
+from utils import get_full_function_name
 from modules.sources import bees_brewery_api
-from pyspark.sql.types import StructType, StructField, StringType
+from modules.sinks import local_folder
 
-spark = SparkSession.builder.appName("BreweryData").getOrCreate()
+# Setup logging configuration
+logging.config.fileConfig("logging.conf")
+logger = logging.getLogger(__name__)
 
 def fetch_data_from_api(func):
+    logger.debug(f"Request sent using adapter "
+                f"{get_full_function_name(func)}")
+    
     res = func()
 
     if res.status_code== 200:
         return res.json()
     
+def save_json_file(func, data: object = None):
+    logger.debug(f"Trying to save using adapter "
+                f"{get_full_function_name(func)}")
+    
+    res = func(data=data)
 
-schema = StructType([
-    StructField("id", StringType(), False),
-    StructField("name", StringType(), True),
-    StructField("brewery_type", StringType(), True),
-    StructField("address_1", StringType(), True),
-    StructField("address_2", StringType(), True),
-    StructField("address_3", StringType(), True), 
-    StructField("city", StringType(), True),
-    StructField("state_province", StringType(), True),
-    StructField("postal_code", StringType(), True),
-    StructField("country", StringType(), True),
-    StructField("longitude", StringType(), True),
-    StructField("latitude", StringType(), True),
-    StructField("phone", StringType(), True),
-    StructField("website_url", StringType(), True),
-    StructField("state", StringType(), True),
-    StructField("street", StringType(), True)
-])
+    if res["save_successfull"]:
+        logger.debug(f"File saved in {res["full_path"]}, "
+                        f"size: {res["size"]}")
+        
+        return res
 
 data = fetch_data_from_api(bees_brewery_api.get)
 
-df = spark.createDataFrame(data, schema=schema)
-
-df.show(5)
-
-spark.stop()
+saving_resp = save_json_file(local_folder.sink_to_local_folder, data=data)
