@@ -25,6 +25,8 @@ jobs:
 
     - name: Run tests
       run: |
+        # Add src directory to PYTHONPATH
+        export PYTHONPATH=$PYTHONPATH:$(pwd)/src
         coverage run -m pytest tests
 
   run-linters:
