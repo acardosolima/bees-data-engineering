@@ -4,6 +4,13 @@ from utils import get_full_function_name
 from modules.sources import bees_brewery_api
 from modules.sinks import local_folder
 
+"""
+This module provides methods to do Extraction steps.
+
+Includes functions to fetch data from a source and sinking it into another 
+
+"""
+
 # Setup logging configuration
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
