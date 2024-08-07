@@ -14,6 +14,7 @@ provider "aws" {
   default_tags {
     tags = {
       Project = "Bees Breweries"
+      profile = var.aws_profile
     }
   }
 }
