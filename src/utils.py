@@ -11,6 +11,7 @@ This module provides various utils functions to be used by other modules.
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
 
+
 def get_full_function_name(func) -> str:
     """
     Gets full method name
@@ -52,3 +53,15 @@ def validate_directory(path: str) -> bool:
         logger.error(f"Permission denied trying create directory: {e}")
     except OSError as e:
         logger.error(f"Error accessing file system: {e}")
+
+def snake_to_pascal(snake_str):
+    """
+    Converts a snake_case string to PascalCase.
+
+    Args:
+        snake_str (str): string in snake_case
+
+    Returns:
+        string in PascalCase
+    """
+    return ''.join(word.capitalize() for word in snake_str.split('_'))
