@@ -2,8 +2,8 @@
 import logging.config
 import json
 from utils import get_full_function_name
-from modules.sources import bees_brewery_api
-from modules.sinks import local_folder, aws_s3
+from modules.sources import extract_bees_brewery_api
+from modules.sinks import save_aws_s3, save_local_folder
 
 """
 This module provides methods to do Extraction steps.
