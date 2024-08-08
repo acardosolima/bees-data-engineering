@@ -5,6 +5,10 @@ This project aims to create a data pipeline consuming data from Breweries API, t
 
 - [Breweries Data Analysis]()
   - [Table of contents](#table-of-contents)
+  - [Setting up](#setting-up)
+    - [Dev environment](#dev-environment)
+    - [Prod environment](#prod-environment)
+  - [To Do](#to-do)
   - [Contributors](#contributors)
 
 ## Setting up
@@ -34,6 +38,11 @@ aws configure --profile <profile>
 ```
 source setup.sh -e prod
 ```
+
+
+### TO DO
+- Refactor transformers and loaders modules to reuse sinks methods. Parametrizing the sink files should enable to use them for various locations and file extensions
+- Enable changing file name in analysis step. Could consider the *module name.parquet*
 
 ## Contributors
 - [Adriano C. Lima](mailto:adrianocardoso1991@gmail.com)

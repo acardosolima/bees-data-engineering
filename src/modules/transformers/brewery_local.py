@@ -1,0 +1,59 @@
+import logging.config
+from .brewery_schema import get_brewery_schema
+from utils import snake_to_pascal
+from pyspark.sql import DataFrame, SparkSession
+
+# # Setup logging configuration
+logging.config.fileConfig("logging.conf")
+logger = logging.getLogger(__name__)
+
+
+INPUT_PATH = "data/bronze/brewery.json"
+OUTPUT_PATH = "data/silver/brewery.parquet"
+
+
+def load_bronze_raw_data(spark: SparkSession = None,
+                         input_path: str = INPUT_PATH):
+    try:
+        df = spark.read.schema(get_brewery_schema()) \
+            .option("multiline", "true").json(input_path)
+        return df
+
+    except Exception as e:
+        print(f"Read operation failed: {e}")
+
+
+def transform_dataframe(df):
+
+    # Renames columns to PascalCase pattern to be consistent with DB patterns
+    transf_df = df.toDF(*[snake_to_pascal(c) for c in df.columns])
+
+    return transf_df
+
+
+def save_dataframe_as_parquet(spark: SparkSession = None, df: DataFrame = None,
+                              partition_by: str = "",
+                              output_path: str = OUTPUT_PATH) -> dict:
+
+    response_obj = {
+        "save_successfull": False,
+        "full_path": None,
+        "size": 0
+    }
+
+    try:
+        df.write.partitionBy(partition_by).mode("append").parquet(output_path)
+
+        logger.debug(f"Saved file {output_path} successfully")
+
+        response_obj["save_successfull"] = True
+        response_obj["full_path"] = output_path
+
+    except Exception as e:
+        print(f"Write operation failed: {e}")
+
+    return response_obj
+
+
+def get_column_partition_by() -> str:
+    return "StateProvince"

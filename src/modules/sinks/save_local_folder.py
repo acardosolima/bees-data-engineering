@@ -8,8 +8,8 @@ from datetime import datetime
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
 
-FILENAME = str(datetime.now().strftime("%Y%m%d%H%m%S")) + ".json"
-PATH = "data/"
+FILENAME = "brewery.json"
+PATH = "data/bronze/" + str(datetime.now().strftime("%Y%m%d%H%m%S"))
 
 
 def sink_to_local_folder(filename: str = FILENAME, data: object = None,
