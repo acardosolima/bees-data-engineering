@@ -56,14 +56,32 @@ def validate_directory(path: str) -> bool:
         logger.error(f"Error accessing file system: {e}")
 
 
-def snake_to_pascal(snake_str):
+def snake_to_pascal(snake_str: str = "") -> str:
     """
     Converts a snake_case string to PascalCase.
 
     Args:
-        snake_str (str): string in snake_case
+        snake_str: string in snake_case
 
     Returns:
         string in PascalCase
     """
     return ''.join(word.capitalize() for word in snake_str.split('_'))
+
+
+def separate_bucket_key(path: str = "") -> dict:
+    """
+    Given an s3 full path, separates into bucket and key values
+
+    Args:
+        path: full path of S3 object
+
+    Returns:
+        dict with values for bucket name and key name
+    """
+    bucket, key = path.split("/", 1)
+    
+    return {
+        "bucket": bucket,
+        "key": key
+    }
