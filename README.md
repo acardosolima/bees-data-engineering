@@ -35,5 +35,9 @@ aws configure --profile <profile>
 source setup.sh -e prod
 ```
 
+
+### TO DO
+Refactor transformers and loaders modules to reuse sinks methods. Parametrizing the sink files should enable to use them for various locations and file extensions
+
 ## Contributors
 - [Adriano C. Lima](mailto:adrianocardoso1991@gmail.com)
