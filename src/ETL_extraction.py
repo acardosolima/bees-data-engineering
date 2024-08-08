@@ -67,7 +67,7 @@ def save_json_file(func, data: object = None) -> dict:
 
 
 
-def main(func_fetch, func_save):
+def main(func_fetch, func_save) -> dict:
 
     # Calls the fetch data method using adapter received from main.py
     raw_data = fetch_data_from_api(func_fetch)
