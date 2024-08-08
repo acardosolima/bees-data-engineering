@@ -5,5 +5,19 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./src:/app/src
+      - data_volume:/app/data
     command: python /app/src/main.py
 
+  jupyter:
+    image: jupyter/minimal-notebook
+    volumes:
+      - data_volume:/home/jovyan/data
+    ports:
+      - "8888:8888"
+    command: >
+      /bin/bash -c "
+      pip install pandas pyarrow && 
+      start-notebook.sh"
+
+volumes:
+  data_volume: 
