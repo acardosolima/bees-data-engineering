@@ -21,6 +21,7 @@ def load_bronze_raw_data(spark: SparkSession = None, input_path: str = INPUT_PAT
 
 def transform_dataframe(df):
 
+    # Renames columns to PascalCase pattern to be consistent with DB patterns
     transf_df = df.toDF(*[snake_to_pascal(c) for c in df.columns])
 
     return transf_df
