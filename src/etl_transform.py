@@ -1,8 +1,5 @@
-
 import logging.config
 from utils import get_full_function_name
-from modules.transformers import brewery_local
-from pyspark.sql import DataFrame
 from pyspark.sql import DataFrame, SparkSession
 
 """
@@ -17,7 +14,9 @@ apply transformations and save dataset as parquet/delta
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
 
-def load_bronze_raw_data(func, spark: SparkSession, input_path: str) -> DataFrame:
+
+def load_bronze_raw_data(func, spark: SparkSession,
+                         input_path: str) -> DataFrame:
     """
     Executes a method to gather the bronze data
 
@@ -31,11 +30,12 @@ def load_bronze_raw_data(func, spark: SparkSession, input_path: str) -> DataFram
     """
 
     logger.debug(f"Loading bronze data using adapter "
-                f"{get_full_function_name(func)}")
+                 f"{get_full_function_name(func)}")
 
     df = func(spark=spark, input_path=input_path)
 
     return df
+
 
 def transform_dataframe(func, df: DataFrame) -> DataFrame:
     """
@@ -50,13 +50,14 @@ def transform_dataframe(func, df: DataFrame) -> DataFrame:
     """
 
     logger.debug(f"Transforming dataframe using adapter "
-                f"{get_full_function_name(func)}")
+                 f"{get_full_function_name(func)}")
 
     df = func(df)
 
     return df
 
-def save_dataframe_as_parquet(func,spark: SparkSession, df: DataFrame,
+
+def save_dataframe_as_parquet(func, spark: SparkSession, df: DataFrame,
                               partition_by: str, output_path: str):
     """
     Executes a method to persist dataframe to silver layer
@@ -75,13 +76,16 @@ def save_dataframe_as_parquet(func,spark: SparkSession, df: DataFrame,
     """
 
     logger.debug(f"Saving dataframe as parquet using adapter "
-                f"{get_full_function_name(func)}")
- 
-    res = func(spark=spark, df=df, partition_by=partition_by, output_path=output_path)
+                 f"{get_full_function_name(func)}")
+
+    res = func(spark=spark, df=df, partition_by=partition_by,
+               output_path=output_path)
 
     return res
 
-def main(bronze_path: str, load_func, transf_func, save_func, partition_column) -> dict:
+
+def main(bronze_path: str, load_func, transf_func,
+         save_func, partition_column) -> dict:
 
     # Initialize Spark Session
     spark = SparkSession.builder \
@@ -89,15 +93,20 @@ def main(bronze_path: str, load_func, transf_func, save_func, partition_column) 
         .getOrCreate()
 
     # Path to store the transformed dataframe in silver layer
-    silver_path = bronze_path.replace("bronze", "silver").replace(".json", ".parquet")
+    silver_path = bronze_path.replace("bronze", "silver") \
+        .replace(".json", ".parquet")
 
     # Calls the load bronze method using adapter received from main.py
-    raw_df = load_bronze_raw_data(load_func, spark=spark, input_path=bronze_path)
+    raw_df = load_bronze_raw_data(load_func, spark=spark,
+                                  input_path=bronze_path)
 
     # Calls the transform data method using adapter received from main.py
     transf_df = transform_dataframe(transf_func, raw_df)
 
     # Calls the save as parquet method using adapter received from main.py
-    res = save_dataframe_as_parquet(save_func, spark=spark, df=transf_df, partition_by=partition_column, output_path=silver_path)
+    res = save_dataframe_as_parquet(save_func, spark=spark,
+                                    df=transf_df,
+                                    partition_by=partition_column,
+                                    output_path=silver_path)
 
     return res

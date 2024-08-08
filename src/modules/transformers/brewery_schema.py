@@ -1,5 +1,6 @@
 from pyspark.sql.types import StructField, StructType, StringType
 
+
 def get_brewery_schema() -> StructType:
     """
     Returns the schema for OpenBrewery API data
@@ -16,7 +17,7 @@ def get_brewery_schema() -> StructType:
         StructField("brewery_type", StringType(), False),
         StructField("address_1", StringType(), True),
         StructField("address_2", StringType(), True),
-        StructField("address_3", StringType(), True), 
+        StructField("address_3", StringType(), True),
         StructField("city", StringType(), True),
         StructField("state_province", StringType(), True),
         StructField("postal_code", StringType(), True),

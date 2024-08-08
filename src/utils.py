@@ -27,6 +27,7 @@ def get_full_function_name(func) -> str:
 
     return f"{module_name}.{function_name}"
 
+
 def validate_directory(path: str) -> bool:
     """
     Validates a given directory
@@ -46,13 +47,14 @@ def validate_directory(path: str) -> bool:
             logger.debug(f"Directory created in {directory}")
         else:
             logger.debug(f"Directory {directory} already exists")
-        
+
         return True
-    
+
     except PermissionError as e:
         logger.error(f"Permission denied trying create directory: {e}")
     except OSError as e:
         logger.error(f"Error accessing file system: {e}")
+
 
 def snake_to_pascal(snake_str):
     """
