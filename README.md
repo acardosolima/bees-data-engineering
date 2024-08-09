@@ -7,7 +7,7 @@ This project aims to create a data pipeline consuming data from Breweries API, t
   - [Table of contents](#table-of-contents)
   - [Setting up](#setting-up)
     - [Dev environment](#dev-environment)
-    - [Prod environment](#prod-environment)
+  - [Process Architecture](#process_architecture)
   - [To Do](#to-do)
   - [Contributors](#contributors)
 
@@ -26,6 +26,19 @@ docker compose version
 source setup.sh -e dev
 ```
 
+<!-- ### Prod environment
+For prod environment, the chosen stack is AWS Glue Jobs for execution and orchestration.
+1. Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+2. Configure the CLI with the desired AWS user and save it to a profile
+```
+aws configure --profile <profile>
+```
+3. Terraform will use the credentials saved in *<user_home>/.aws/credentials* to do AWS operations
+4. Run script setup.sh to provision the environment on AWS
+```
+source setup.sh -e prod 
+```-->
+
 ## Process architecture
 1. Creation of three modules to extract, transform and do business analyzis of data
    1. src\etl_extraction.py
@@ -39,18 +52,12 @@ source setup.sh -e dev
 7. Each dag will call the respective module passing parameters if necessary
 8. Data are created inside the shared volume, under /opt/airflow/data
 
-<!-- ### Prod environment
-For prod environment, the chosen stack is AWS Glue Jobs for execution and orchestration.
-1. Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-2. Configure the CLI with the desired AWS user and save it to a profile
-```
-aws configure --profile <profile>
-```
-3. Terraform will use the credentials saved in *<user_home>/.aws/credentials* to do AWS operations
-4. Run script setup.sh to provision the environment on AWS
-```
-source setup.sh -e prod 
-```-->
+### Bronze file
+![1](https://github.com/user-attachments/assets/83955acb-96cd-4845-8877-9eaac7fcd759)
+### Silver file
+![2](https://github.com/user-attachments/assets/6a1412cc-ca3f-4ae5-9258-aafaeb22ccd3)
+### Gold file
+![3](https://github.com/user-attachments/assets/e3ab1a37-4376-495c-bf9c-a19c4e9f3032)
 
 
 ### TO DO
