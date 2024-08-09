@@ -8,6 +8,7 @@ usage_error_message() {
 
 dev_statements(){
     docker compose build
+    docker compose up airflow-init
     docker compose up
 }
 
