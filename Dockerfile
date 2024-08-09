@@ -35,5 +35,5 @@ RUN python3 -m pip install --no-cache-dir -r /app/requirements.txt
 # Set the working directory
 WORKDIR /app
 
-# Keep container running to accept Spark jobs
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+# Command to run 
+CMD ["python", "/app/src/main.py"]
