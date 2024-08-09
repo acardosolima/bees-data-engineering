@@ -6,7 +6,7 @@ from pyspark.sql.functions import col
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
 
-INPUT_PATH = "data/silver/brewery.json"
+INPUT_PATH = "data/silver/brewery.parquet"
 OUTPUT_PATH = "data/gold/brewery_types_location.parquet"
 
 
