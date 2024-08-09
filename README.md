@@ -7,7 +7,7 @@ This project aims to create a data pipeline consuming data from Breweries API, t
   - [Table of contents](#table-of-contents)
   - [Setting up](#setting-up)
     - [Dev environment](#dev-environment)
-  - [Process Architecture](#process_architecture)
+  - [Process Architecture](#process-architecture)
   - [To Do](#to-do)
   - [Contributors](#contributors)
 
